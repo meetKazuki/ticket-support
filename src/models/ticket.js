@@ -15,11 +15,7 @@ export default (sequelize, DataTypes) => {
   }, {});
 
   Ticket.associate = (models) => {
-    Ticket.hasMany(models.Comment, {
-      foreignKey: 'ticketId',
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    });
+    Ticket.hasMany(models.Comment, { as: 'comments' });
   };
 
   return Ticket;

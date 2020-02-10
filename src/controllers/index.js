@@ -57,7 +57,11 @@ export default {
    * @returns {Object} response object
    */
   getAllTickets: async (request, response) => {
-    const tickets = await Ticket.findAll();
+    const tickets = await Ticket.findAll({
+      include: [
+        { model: Comment, as: 'comments' },
+      ],
+    });
 
     return response.status(200).json({
       status: 'success',
@@ -102,7 +106,7 @@ export default {
     if (!ticketObject) throw new NotFoundError();
 
     const { status } = request.body;
-    await Ticket.update(status);
+    await Ticket.update({ status }, { where: { id: ticketId } });
 
     return response.status(200).json({
       status: 'success',

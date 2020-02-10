@@ -36,7 +36,6 @@ export default {
       .withMessage('Invalid ticket ID'),
 
     check('status')
-      .optional()
       .trim()
       .not()
       .isEmpty({ ignore_whitespace: true })
