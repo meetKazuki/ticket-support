@@ -1,4 +1,4 @@
-import { check } from 'express-validator';
+import { check, param } from 'express-validator';
 
 export default {
   createTicketSchema: [
@@ -28,5 +28,21 @@ export default {
       .withMessage('Provide the status of this ticket')
       .isIn(['pending', 'resolved'])
       .withMessage('Ticket can only be marked as "pending" or "resolved"'),
+  ],
+
+  createCommentSchema: [
+    param('ticketId')
+      .isUUID(4)
+      .withMessage('Invalid ticket ID'),
+
+    check('author')
+      .not()
+      .isEmpty()
+      .withMessage('Provide your fullname'),
+
+    check('comment')
+      .not()
+      .isEmpty()
+      .withMessage('Comment cannot be empty. Enter your comment'),
   ],
 };

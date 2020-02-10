@@ -1,3 +1,4 @@
+import { NotFoundError } from '../helpers/errors';
 import models from '../models';
 
 const { Ticket, Comment } = models;
@@ -16,8 +17,33 @@ export default {
     const newTicket = await Ticket.create(request.body);
     return response.status(201).json({
       status: 'success',
-      message: 'ticket created successfully',
+      message: 'ticket created',
       data: newTicket,
+    });
+  },
+
+  /**
+   * @function createComment
+   * @description add comments to ticket
+   *
+   * @param {Object} request - the request object
+   * @param {Object} response - the response object
+   *
+   * @returns {Object} response object
+   */
+  createComment: async (request, response) => {
+    const { ticketId } = request.params;
+
+    const ticketObject = await Ticket.findByPk(ticketId);
+    if (!ticketObject) throw new NotFoundError();
+
+    const comment = { ...request.body };
+    const commentData = await Comment.create({ ticketId, ...comment });
+
+    return response.status(201).json({
+      status: 'success',
+      message: 'comment added',
+      data: commentData,
     });
   },
 };
