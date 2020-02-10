@@ -48,6 +48,45 @@ export default {
   },
 
   /**
+   * @function getAllTickets
+   * @description fetch all tickets
+   *
+   * @param {Object} request - the request object
+   * @param {Object} response - the response object
+   *
+   * @returns {Object} response object
+   */
+  getAllTickets: async (request, response) => {
+    const tickets = await Ticket.findAll();
+
+    return response.status(200).json({
+      status: 'success',
+      data: tickets,
+    });
+  },
+
+  /**
+   * @function getOneTicket
+   * @description fetch a ticket
+   *
+   * @param {Object} request - the request object
+   * @param {Object} response - the response object
+   *
+   * @returns {Object} response object
+   */
+  getOneTicket: async (request, response) => {
+    const { ticketId } = request.params;
+
+    const ticket = await Ticket.findByPk(ticketId);
+    if (!ticket) throw new NotFoundError();
+
+    return response.status(200).json({
+      status: 'success',
+      data: ticket,
+    });
+  },
+
+  /**
    * @function updateTicketStatus
    * @description handles ticket status update
    *

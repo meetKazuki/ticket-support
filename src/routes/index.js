@@ -9,6 +9,8 @@ const router = Router();
 const {
   createTicket,
   createComment,
+  getAllTickets,
+  getOneTicket,
   updateTicketStatus,
 } = ticketController;
 
@@ -16,6 +18,7 @@ const {
   createTicketSchema,
   createCommentSchema,
   updateTicketSchema,
+  checkId,
 } = ticketSchema;
 
 router.post(
@@ -28,6 +31,17 @@ router.post(
   '/tickets/:ticketId/comment',
   validator(createCommentSchema),
   asyncWrapper(createComment),
+);
+
+router.get(
+  '/tickets',
+  asyncWrapper(getAllTickets),
+);
+
+router.get(
+  '/tickets/:ticketId',
+  validator(checkId),
+  asyncWrapper(getOneTicket),
 );
 
 router.patch(

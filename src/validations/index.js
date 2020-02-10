@@ -60,4 +60,10 @@ export default {
       .isEmpty()
       .withMessage('Comment cannot be empty. Enter your comment'),
   ],
+
+  checkId: [
+    param('ticketId')
+      .isUUID(4)
+      .withMessage('Invalid ticket ID'),
+  ],
 };
