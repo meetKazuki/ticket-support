@@ -46,4 +46,28 @@ export default {
       data: commentData,
     });
   },
+
+  /**
+   * @function updateTicketStatus
+   * @description handles ticket status update
+   *
+   * @param {Object} request - the request object
+   * @param {Object} response - the response object
+   *
+   * @returns {Object} response object
+   */
+  updateTicketStatus: async (request, response) => {
+    const { ticketId } = request.params;
+
+    const ticketObject = await Ticket.findByPk(ticketId);
+    if (!ticketObject) throw new NotFoundError();
+
+    const { status } = request.body;
+    await Ticket.update(status);
+
+    return response.status(200).json({
+      status: 'success',
+      message: 'ticket status updated',
+    });
+  },
 };

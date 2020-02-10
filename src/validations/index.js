@@ -30,6 +30,21 @@ export default {
       .withMessage('Ticket can only be marked as "pending" or "resolved"'),
   ],
 
+  updateTicketSchema: [
+    param('ticketId')
+      .isUUID(4)
+      .withMessage('Invalid ticket ID'),
+
+    check('status')
+      .optional()
+      .trim()
+      .not()
+      .isEmpty({ ignore_whitespace: true })
+      .withMessage('Provide the status of this ticket')
+      .isIn(['pending', 'resolved'])
+      .withMessage('Ticket can only be marked as "pending" or "resolved"'),
+  ],
+
   createCommentSchema: [
     param('ticketId')
       .isUUID(4)
