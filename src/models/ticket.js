@@ -5,12 +5,13 @@ export default (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    name: DataTypes.STRING,
+    title: DataTypes.STRING,
+    ownerName: DataTypes.STRING,
+    ownerEmail: DataTypes.STRING,
     status: {
       type: DataTypes.ENUM('resolved', 'pending'),
       defaultValue: 'pending',
     },
-    owner: DataTypes.STRING,
   }, {});
 
   Ticket.associate = (models) => {

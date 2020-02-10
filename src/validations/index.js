@@ -1,0 +1,32 @@
+import { check } from 'express-validator';
+
+export default {
+  createTicketSchema: [
+    check('title')
+      .not()
+      .isEmpty()
+      .withMessage('Provide the title of this ticket'),
+
+    check('ownerName')
+      .not()
+      .isEmpty()
+      .withMessage('Provide your fullname'),
+
+    check('ownerEmail')
+      .not()
+      .isEmpty()
+      .withMessage('Email address is required')
+      .isEmail()
+      .withMessage('Enter a valid email address')
+      .normalizeEmail(),
+
+    check('status')
+      .optional()
+      .trim()
+      .not()
+      .isEmpty({ ignore_whitespace: true })
+      .withMessage('Provide the status of this ticket')
+      .isIn(['pending', 'resolved'])
+      .withMessage('Ticket can only be marked as "pending" or "resolved"'),
+  ],
+};
