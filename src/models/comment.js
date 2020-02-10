@@ -11,11 +11,7 @@ export default (sequelize, DataTypes) => {
   }, {});
 
   Comment.associate = (models) => {
-    Comment.belongsTo(models.Ticket, {
-      foreignKey: 'ticketId',
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    });
+    Comment.belongsTo(models.Ticket, { foreignKey: 'ticketId' });
   };
 
   return Comment;
