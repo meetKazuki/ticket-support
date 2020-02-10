@@ -1,36 +1,35 @@
-'use strict';
-module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Comments', {
+export default {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.sequelize.query(
+      'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";',
+    );
+
+    queryInterface.createTable('Comments', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
-      owner: {
-        type: Sequelize.STRING
+      author: {
+        type: Sequelize.STRING,
       },
       ticketId: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       comment: {
-        type: Sequelize.STRING
-      },
-      owner: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Comments');
-  }
+
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Comments'),
 };

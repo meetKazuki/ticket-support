@@ -1,36 +1,39 @@
-'use strict';
-module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Tickets', {
+export default {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.sequelize.query(
+      'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";',
+    );
+
+    queryInterface.createTable('Tickets', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
-      name: {
-        type: Sequelize.STRING
+      title: {
+        type: Sequelize.STRING,
+      },
+      ownerName: {
+        type: Sequelize.STRING,
+      },
+      ownerEmail: {
+        type: Sequelize.STRING,
       },
       status: {
-        type: Sequelize.ARRAY
-      },
-      comment: {
-        type: Sequelize.STRING
-      },
-      owner: {
-        type: Sequelize.STRING
+        type: Sequelize.ENUM('resolved', 'pending'),
+        defaultValue: 'pending',
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Tickets');
-  }
+
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Tickets'),
 };
