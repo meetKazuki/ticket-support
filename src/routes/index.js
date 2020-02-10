@@ -9,11 +9,13 @@ const router = Router();
 const {
   createTicket,
   createComment,
+  updateTicketStatus,
 } = ticketController;
 
 const {
   createTicketSchema,
   createCommentSchema,
+  updateTicketSchema,
 } = ticketSchema;
 
 router.post(
@@ -26,6 +28,12 @@ router.post(
   '/tickets/:ticketId/comment',
   validator(createCommentSchema),
   asyncWrapper(createComment),
+);
+
+router.patch(
+  '/tickets/:ticketId',
+  validator(updateTicketSchema),
+  updateTicketStatus,
 );
 
 export default router;
