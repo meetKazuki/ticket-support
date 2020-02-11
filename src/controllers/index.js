@@ -59,7 +59,10 @@ export default {
   getAllTickets: async (request, response) => {
     const tickets = await Ticket.findAll({
       include: [
-        { model: Comment, as: 'comments' },
+        {
+          model: Comment,
+          as: 'comment',
+        },
       ],
     });
 

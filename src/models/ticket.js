@@ -15,7 +15,7 @@ export default (sequelize, DataTypes) => {
   }, {});
 
   Ticket.associate = (models) => {
-    Ticket.hasMany(models.Comment, { as: 'comments' });
+    Ticket.hasMany(models.Comment, { as: 'comment' });
   };
 
   return Ticket;
